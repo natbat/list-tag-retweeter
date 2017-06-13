@@ -1,0 +1,5 @@
+*.pyc
+flask_twitter.py
+templates
+venv
+
