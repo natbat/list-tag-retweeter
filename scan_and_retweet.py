@@ -13,10 +13,18 @@ BATCH_SIZE = 200
 
 
 def tweet_matches_rule(tweet):
+    # If tweet is a retweet, skip it
+    if tweet.retweeted:
+        return False
+    # Tweet must be within our defined date range
     date = parser.parse(tweet.created_at).date()
     if config.START_DATE <= date <= config.END_DATE:
         full_text = tweet.full_text.lower()
-        return config.HASHTAG in full_text
+        # Tweet must feature one of our hashtags
+        for hashtag in config.HASHTAGS:
+            if hashtag in full_text:
+                return True
+        return False
     else:
         return False
 
